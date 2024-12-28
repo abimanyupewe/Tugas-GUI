@@ -71,6 +71,8 @@ public class Register extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Humanst521 BT", 0, 12)); // NOI18N
         jLabel11.setText("Re-password");
 
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Sign in");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +82,8 @@ public class Register extends javax.swing.JFrame {
 
         jLabel12.setText("Sudah punya akun?");
 
+        jButton2.setBackground(new java.awt.Color(0, 102, 102));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Login");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

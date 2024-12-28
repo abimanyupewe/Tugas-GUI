@@ -84,6 +84,8 @@ public class Profile extends homePage {
             }
         });
 
+        btnUbahPass.setBackground(new java.awt.Color(0, 102, 102));
+        btnUbahPass.setForeground(new java.awt.Color(255, 255, 255));
         btnUbahPass.setText("Ubah Password");
         btnUbahPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +93,8 @@ public class Profile extends homePage {
             }
         });
 
+        btnUbahData.setBackground(new java.awt.Color(0, 102, 102));
+        btnUbahData.setForeground(new java.awt.Color(255, 255, 255));
         btnUbahData.setText("Ubah Data");
         btnUbahData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

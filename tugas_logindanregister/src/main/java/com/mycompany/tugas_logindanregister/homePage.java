@@ -20,8 +20,6 @@ public class homePage extends javax.swing.JFrame {
 
     public homePage() {
         initComponents();
-        
-        JOptionPane.showMessageDialog(this, "Hallo, Selamat datang" + nama + "diprogram pendataan Logistik.", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
