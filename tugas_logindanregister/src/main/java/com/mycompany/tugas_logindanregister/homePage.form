@@ -39,6 +39,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuLogout">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Alt+L"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Logout"/>
               </Properties>
               <Events>
@@ -47,6 +50,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuKeluar">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Alt+O"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Keluar"/>
               </Properties>
               <Events>
