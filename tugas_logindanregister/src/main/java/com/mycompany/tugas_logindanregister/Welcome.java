@@ -37,10 +37,9 @@ public class Welcome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\Project java\\Tugas-GUI\\tugas_logindanregister\\src\\main\\java\\com\\mycompany\\tugas_logindanregister\\assets\\welcome.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\D\\Documents\\NetBeansProjects\\tugas_logindanregister\\src\\main\\java\\com\\mycompany\\tugas_logindanregister\\assets\\welcome.png")); // NOI18N
 
         textSambutan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        textSambutan.setForeground(new java.awt.Color(0, 0, 0));
         textSambutan.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 textSambutanAncestorAdded(evt);
@@ -88,7 +87,7 @@ public class Welcome extends javax.swing.JFrame {
                 .addComponent(textSambutan, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(btnExplore, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,6 +134,9 @@ public class Welcome extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Welcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

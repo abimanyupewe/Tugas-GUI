@@ -20,7 +20,8 @@ public class Profile extends homePage {
     /**
      * Creates new form Profile
      */
-    String emailUser;
+    String ubahPassword, 
+            passBaru;
 
     public Profile() {
         initComponents();
@@ -198,13 +199,13 @@ public class Profile extends homePage {
 
     private void btnUbahPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahPassActionPerformed
         // TODO add your handling code here:
-         emailUser = JOptionPane.showInputDialog(this, "Masukkan email kamu ");
+         ubahPassword = JOptionPane.showInputDialog(this, "Masukkan password lama kamu ");
 
-        if ((emailUser.equals(Register.email))) {
+        if ((ubahPassword.equals(Register.pass))) {
 
-            pass = JOptionPane.showInputDialog(this, "Masukkan pass baeu : ");
+            passBaru = JOptionPane.showInputDialog(this, "Masukkan pass baru : ");
         } else {
-            JOptionPane.showMessageDialog(this, "Password tidak ditemukan, pastikan anda memasukkan username dengan benar dan cek kembali", "Warnning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Password tidak ditemukan, pastikan anda memasukkan password dengan benar dan cek kembali", "Warnning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnUbahPassActionPerformed
 
@@ -242,6 +243,9 @@ public class Profile extends homePage {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Profile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

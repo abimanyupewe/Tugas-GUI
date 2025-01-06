@@ -80,11 +80,9 @@ public class Login extends javax.swing.JFrame {
         jLabel7.setText("Mulai mengelola logistik dengan mudah dan efesien");
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setIcon(new javax.swing.ImageIcon("E:\\Project java\\Tugas-GUI\\tugas_logindanregister\\src\\main\\java\\com\\mycompany\\tugas_logindanregister\\assets\\ilust1.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\D\\Documents\\NetBeansProjects\\tugas_logindanregister\\src\\main\\java\\com\\mycompany\\tugas_logindanregister\\assets\\ilust1.png")); // NOI18N
         jLabel8.setAlignmentY(0.0F);
         jLabel8.setIconTextGap(0);
-        jLabel8.setMaximumSize(new java.awt.Dimension(0, 0));
-        jLabel8.setMinimumSize(new java.awt.Dimension(0, 0));
 
         btnRegister.setBackground(new java.awt.Color(0, 102, 102));
         btnRegister.setForeground(new java.awt.Color(255, 255, 255));
@@ -112,13 +110,13 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 15, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRegister))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel8))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,12 +127,12 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(btnRegister))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel9.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
@@ -243,6 +241,9 @@ public class Login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

@@ -159,7 +159,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -188,7 +188,7 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnRegister" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -222,16 +222,10 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="E:\Project java\Tugas-GUI\tugas_logindanregister\src\main\java\com\mycompany\tugas_logindanregister\assets\ilust1.png"/>
+              <Image iconType="2" name="C:\Users\D\Documents\NetBeansProjects\tugas_logindanregister\src\main\java\com\mycompany\tugas_logindanregister\assets\ilust1.png"/>
             </Property>
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="iconTextGap" type="int" value="0"/>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[0, 0]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[0, 0]"/>
-            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnRegister">

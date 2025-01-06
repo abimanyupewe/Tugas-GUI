@@ -52,7 +52,7 @@
               <Component id="textSambutan" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="btnExplore" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,7 +61,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="E:\Project java\Tugas-GUI\tugas_logindanregister\src\main\java\com\mycompany\tugas_logindanregister\assets\welcome.png"/>
+          <Image iconType="2" name="C:\Users\D\Documents\NetBeansProjects\tugas_logindanregister\src\main\java\com\mycompany\tugas_logindanregister\assets\welcome.png"/>
         </Property>
       </Properties>
     </Component>
@@ -69,9 +69,6 @@
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
       </Properties>
       <Events>

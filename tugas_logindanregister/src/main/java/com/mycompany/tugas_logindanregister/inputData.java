@@ -5,8 +5,13 @@
 package com.mycompany.tugas_logindanregister;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -40,12 +45,33 @@ public class inputData extends homePage {
         initComponents();
         Color bg = new Color(255, 255, 255, 255);
         getContentPane().setBackground(bg);
-        
+
         Object kolom[] = {"No Resi", "Nama Pengirim", "Nama Penerima", "No Tlp Pengirim", "Alamat Pengirim", "No Tlp Penerima", "Alamat Penerima", "Jenis Barang", "Berat", "Jenis Pengiriman", "Mode Pengiriman", "Opsi Extra", "Status"};
         Object data[][] = {};
 
         model = new DefaultTableModel(data, kolom);
         jTableHasil.setModel(model);
+
+        // Menambahkan TableRowSorter untuk penyaringan
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        jTableHasil.setRowSorter(sorter);
+
+        // Set default filter combo box selection ke "Semua"
+        jCBFilter.setSelectedIndex(0);  // Default "Semua"
+
+        // ActionListener untuk mengubah filter berdasarkan pilihan di JComboBox
+        jCBFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedStatus = (String) jCBFilter.getSelectedItem();
+                if (selectedStatus.equals("Semua")) {
+                    sorter.setRowFilter(null);  // Menampilkan semua data
+                } else {
+                    // Filter hanya berdasarkan kolom "Status" (indeks ke-12)
+                    sorter.setRowFilter(RowFilter.regexFilter(selectedStatus, 12));
+                }
+            }
+        });
 
 //        JOptionPane.showMessageDialog(this, "Hallo, Selamat datang diprogram pendataan Logistik.", "Info", JOptionPane.INFORMATION_MESSAGE);
 //        JOptionPane.showMessageDialog(this, "Silahkan isi table sesuai dengan data customer.", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -103,6 +129,9 @@ public class inputData extends homePage {
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jCBFilter = new javax.swing.JComboBox<>();
+        btnFilter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,7 +145,7 @@ public class inputData extends homePage {
                 {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No Resi", "Nama Pengiriman", "Nama Penerima", "No Tlp", "Alamat Tujuan", "Jenis Baranag", "Berat", "Jenis Pengiriman", "Mode Pengiriman", "Opsi Extra", "Status Pengiriman"
+                "No Resi", "Nama Pengiriman", "Nama Penerima", "No Tlp", "Alamat Tujuan", "Jenis Barang", "Berat", "Jenis Pengiriman", "Mode Pengiriman", "Opsi Extra", "Status Pengiriman"
             }
         ) {
             Class[] types = new Class [] {
@@ -157,7 +186,6 @@ public class inputData extends homePage {
 
         jCBStatusPengiriman.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Penjemputan Kurir", "Dalam Perjalanan", "Barang Diterima", "Retur" }));
 
-        btnSimpan.setBackground(new java.awt.Color(255, 255, 255));
         btnSimpan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSimpan.setForeground(new java.awt.Color(0, 102, 102));
         btnSimpan.setText("Simpan");
@@ -168,7 +196,6 @@ public class inputData extends homePage {
             }
         });
 
-        btnHapusisiTabel.setBackground(new java.awt.Color(255, 255, 255));
         btnHapusisiTabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHapusisiTabel.setForeground(new java.awt.Color(0, 102, 102));
         btnHapusisiTabel.setText("Hapus Isi Tabel");
@@ -183,7 +210,6 @@ public class inputData extends homePage {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("No Tlp (Pengirim)");
 
-        btnHapusBarisTabel.setBackground(new java.awt.Color(255, 255, 255));
         btnHapusBarisTabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHapusBarisTabel.setForeground(new java.awt.Color(0, 102, 102));
         btnHapusBarisTabel.setText("Hapus Baris Tabel");
@@ -232,7 +258,6 @@ public class inputData extends homePage {
             }
         });
 
-        btnKeluar.setBackground(new java.awt.Color(255, 255, 255));
         btnKeluar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnKeluar.setForeground(new java.awt.Color(0, 102, 102));
         btnKeluar.setText("Keluar");
@@ -243,7 +268,6 @@ public class inputData extends homePage {
             }
         });
 
-        btnHapusInputan.setBackground(new java.awt.Color(255, 255, 255));
         btnHapusInputan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHapusInputan.setForeground(new java.awt.Color(0, 102, 102));
         btnHapusInputan.setText("Hapus inputan");
@@ -286,7 +310,21 @@ public class inputData extends homePage {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nama Pengirim");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon("E:\\Project java\\Tugas-GUI\\tugas_logindanregister\\src\\main\\java\\com\\mycompany\\tugas_logindanregister\\assets\\ilust3.png")); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\D\\Documents\\NetBeansProjects\\tugas_logindanregister\\src\\main\\java\\com\\mycompany\\tugas_logindanregister\\assets\\ilust3.png")); // NOI18N
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Filter");
+
+        jCBFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Penjemputan Kurir", "Dalam Perjalanan", "Barang Diterima", "Retur" }));
+
+        btnFilter.setForeground(new java.awt.Color(0, 102, 102));
+        btnFilter.setText("Filter");
+        btnFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFilterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -296,74 +334,84 @@ public class inputData extends homePage {
                 .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
+                        .addComponent(jLabel16)
+                        .addContainerGap(994, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnHapusInputan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnHapusBarisTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel2))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtNoResi)
+                                            .addComponent(txtNamaPengirim)
+                                            .addComponent(txtNamaPenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel12)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel15))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                            .addComponent(txtNoTlpPengirim, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtNoTlpPenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(54, 54, 54)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel5))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCBStatusPengiriman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jCBJenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtBeratBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jCheckBoxBubbleWrap)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jCheckBoxPackingKayu))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jRadioButtonExpress)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButton2))
+                                    .addComponent(jCBJenisPengiriman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jCheckBoxDoubleKarton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jCheckBoxPlastikWrap)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(btnFilter)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(576, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNoResi)
-                                    .addComponent(txtNamaPengirim)
-                                    .addComponent(txtNamaPenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel15))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(txtNoTlpPengirim, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNoTlpPenerima, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel5))
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCBStatusPengiriman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCBJenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtBeratBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBoxBubbleWrap)
-                                .addGap(18, 18, 18)
-                                .addComponent(jCheckBoxPackingKayu))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButtonExpress)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2))
-                            .addComponent(jCBJenisPengiriman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBoxDoubleKarton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBoxPlastikWrap)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
                         .addGap(34, 34, 34))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -434,14 +482,17 @@ public class inputData extends homePage {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusBarisTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusInputan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                    .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -457,8 +508,8 @@ public class inputData extends homePage {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(112, 112, 112))
         );
@@ -591,6 +642,31 @@ public class inputData extends homePage {
         }
     }//GEN-LAST:event_btnHapusisiTabelActionPerformed
 
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        // TODO add your handling code here:
+
+        // Menambahkan TableRowSorter untuk penyaringan
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        jTableHasil.setRowSorter(sorter);
+
+        jCBFilter.setSelectedIndex(0);  // Default "Semua"
+
+        // ActionListener untuk mengubah filter berdasarkan pilihan di JComboBox
+        jCBFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedStatus = (String) jCBFilter.getSelectedItem();
+                if (selectedStatus.equals("Semua")) {
+                    sorter.setRowFilter(null);  // Menampilkan semua data
+                } else {
+                    // Filter hanya berdasarkan kolom "Status" (indeks ke-12)
+                    sorter.setRowFilter(RowFilter.regexFilter(selectedStatus, 12));
+                }
+            }
+        });
+
+    }//GEN-LAST:event_btnFilterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -632,6 +708,54 @@ public class inputData extends homePage {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -642,12 +766,14 @@ public class inputData extends homePage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFilter;
     private javax.swing.ButtonGroup btnGroupModePengiriman;
     private javax.swing.JButton btnHapusBarisTabel;
     private javax.swing.JButton btnHapusInputan;
     private javax.swing.JButton btnHapusisiTabel;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JComboBox<String> jCBFilter;
     private javax.swing.JComboBox<String> jCBJenisPengiriman;
     private javax.swing.JComboBox<String> jCBJenisbarang;
     private javax.swing.JComboBox<String> jCBStatusPengiriman;
@@ -657,6 +783,7 @@ public class inputData extends homePage {
     private javax.swing.JCheckBox jCheckBoxPlastikWrap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
