@@ -664,7 +664,6 @@ public class inputData extends homePage {
                 }
             }
         });
-
     }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
