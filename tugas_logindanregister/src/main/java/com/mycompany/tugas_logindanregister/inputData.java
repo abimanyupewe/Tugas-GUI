@@ -110,7 +110,6 @@ public class inputData extends homePage {
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         txtNoResi = new javax.swing.JTextField();
-        btnKeluar = new javax.swing.JButton();
         btnHapusInputan = new javax.swing.JButton();
         txtNamaPengirim = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -131,7 +130,6 @@ public class inputData extends homePage {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jCBFilter = new javax.swing.JComboBox<>();
-        btnFilter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,15 +170,19 @@ public class inputData extends homePage {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("No RESI");
 
+        jCheckBoxBubbleWrap.setBackground(new java.awt.Color(0, 102, 102));
         jCheckBoxBubbleWrap.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxBubbleWrap.setText("Bubble wrap");
 
+        jCheckBoxPackingKayu.setBackground(new java.awt.Color(0, 102, 102));
         jCheckBoxPackingKayu.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxPackingKayu.setText("Packing kayu");
 
+        jCheckBoxDoubleKarton.setBackground(new java.awt.Color(0, 102, 102));
         jCheckBoxDoubleKarton.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxDoubleKarton.setText("Double karton");
 
+        jCheckBoxPlastikWrap.setBackground(new java.awt.Color(0, 102, 102));
         jCheckBoxPlastikWrap.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxPlastikWrap.setText("Plastik wrapping");
 
@@ -258,16 +260,6 @@ public class inputData extends homePage {
             }
         });
 
-        btnKeluar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnKeluar.setForeground(new java.awt.Color(0, 102, 102));
-        btnKeluar.setText("Keluar");
-        btnKeluar.setPreferredSize(new java.awt.Dimension(76, 30));
-        btnKeluar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKeluarActionPerformed(evt);
-            }
-        });
-
         btnHapusInputan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHapusInputan.setForeground(new java.awt.Color(0, 102, 102));
         btnHapusInputan.setText("Hapus inputan");
@@ -298,10 +290,12 @@ public class inputData extends homePage {
 
         jCBJenisPengiriman.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "JNE", "JNT", "Wahana", "Go Send" }));
 
+        jRadioButtonExpress.setBackground(new java.awt.Color(0, 102, 102));
         btnGroupModePengiriman.add(jRadioButtonExpress);
         jRadioButtonExpress.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButtonExpress.setText("Express");
 
+        jRadioButton2.setBackground(new java.awt.Color(0, 102, 102));
         btnGroupModePengiriman.add(jRadioButton2);
         jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton2.setText("Reguler");
@@ -317,14 +311,6 @@ public class inputData extends homePage {
         jLabel11.setText("Filter");
 
         jCBFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Penjemputan Kurir", "Dalam Perjalanan", "Barang Diterima", "Retur" }));
-
-        btnFilter.setForeground(new java.awt.Color(0, 102, 102));
-        btnFilter.setText("Filter");
-        btnFilter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFilterActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -406,12 +392,9 @@ public class inputData extends homePage {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnFilter)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(94, 94, 94)))
                         .addGap(34, 34, 34))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -486,12 +469,10 @@ public class inputData extends homePage {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusBarisTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusInputan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
@@ -585,16 +566,6 @@ public class inputData extends homePage {
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void btnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarActionPerformed
-        // TODO add your handling code here:
-        confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin keluar dari program ?",
-                "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            dispose();
-            JOptionPane.showMessageDialog(this, "Program Keluar Terimakasih", "Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_btnKeluarActionPerformed
-
     private void btnHapusInputanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusInputanActionPerformed
         // TODO add your handling code here:
         confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus inputan ?",
@@ -641,30 +612,6 @@ public class inputData extends homePage {
             JOptionPane.showMessageDialog(this, "Semua data berhasil dihapus.", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnHapusisiTabelActionPerformed
-
-    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
-        // TODO add your handling code here:
-
-        // Menambahkan TableRowSorter untuk penyaringan
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        jTableHasil.setRowSorter(sorter);
-
-        jCBFilter.setSelectedIndex(0);  // Default "Semua"
-
-        // ActionListener untuk mengubah filter berdasarkan pilihan di JComboBox
-        jCBFilter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedStatus = (String) jCBFilter.getSelectedItem();
-                if (selectedStatus.equals("Semua")) {
-                    sorter.setRowFilter(null);  // Menampilkan semua data
-                } else {
-                    // Filter hanya berdasarkan kolom "Status" (indeks ke-12)
-                    sorter.setRowFilter(RowFilter.regexFilter(selectedStatus, 12));
-                }
-            }
-        });
-    }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -765,12 +712,10 @@ public class inputData extends homePage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnFilter;
     private javax.swing.ButtonGroup btnGroupModePengiriman;
     private javax.swing.JButton btnHapusBarisTabel;
     private javax.swing.JButton btnHapusInputan;
     private javax.swing.JButton btnHapusisiTabel;
-    private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> jCBFilter;
     private javax.swing.JComboBox<String> jCBJenisPengiriman;
