@@ -4,7 +4,14 @@
  */
 package com.mycompany.tugas_logindanregister;
 
+import fuctions.connection_database;
 import java.awt.Color;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,10 +23,31 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    public static String nama;
+    public static String email;
+    public static String username;
+    public static String pass;
+
     public Login() {
         initComponents();
         Color bg = new Color(255, 255, 255, 255);
         getContentPane().setBackground(bg);
+    }
+
+//    hashpassword
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -188,26 +216,76 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        if ((txtUsernameLog.getText().equals(Register.username))
-                && (txtPassLog.getText().equals(Register.pass))) {
-            
-            dispose();
-            
-            Welcome wel = new Welcome();
-            wel.setVisible(true);
+//        if ((txtUsernameLog.getText().equals(Register.username))
+//                && (txtPassLog.getText().equals(Register.pass))) {
+//            
+//            dispose();
+//            
+//            Welcome wel = new Welcome();
+//            wel.setVisible(true);
+//
+//            wel.pack();
+//            wel.setLocationRelativeTo(null);
+//            wel.setDefaultCloseOperation(Login.EXIT_ON_CLOSE);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Akun tidak ditemukan, pastikan anda memiliki akun dan cek kembali", "Warnning", JOptionPane.WARNING_MESSAGE);
+//        }
 
-            wel.pack();
-            wel.setLocationRelativeTo(null);
-            wel.setDefaultCloseOperation(Login.EXIT_ON_CLOSE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Akun tidak ditemukan, pastikan anda memiliki akun dan cek kembali", "Warnning", JOptionPane.WARNING_MESSAGE);
+        // Koneksi ke database
+        Connection conn = connection_database.getConnection();
+
+        // Validasi input
+        if (txtUsernameLog.getText().trim().isEmpty() || txtPassLog.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Username dan Password harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Query SQL untuk memeriksa data
+//            String sql = "SELECT password FROM users WHERE username = ?";
+            String sql = "SELECT name, email, username, password FROM users WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, txtUsernameLog.getText().trim());
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Ambil password yang di-hash dari database
+                String hashedPassword = rs.getString("password");
+
+                // Cocokkan password
+                if (hashedPassword.equals(hashPassword(new String(txtPassLog.getPassword())))) {
+                    nama = rs.getString("name"); // Simpan nama, email dan username pengguna
+                    email = rs.getString("email");
+                    username = rs.getString("username");
+                    pass = rs.getString("password");
+//                    JOptionPane.showMessageDialog(this, "Login berhasil!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Lanjutkan ke halaman berikutnya
+                    dispose();
+
+                    Welcome wel = new Welcome();
+                    wel.setVisible(true);
+
+                    wel.pack();
+                    wel.setLocationRelativeTo(null);
+                    wel.setDefaultCloseOperation(Login.EXIT_ON_CLOSE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Password salah!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Username tidak ditemukan!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
         dispose();
-        
+
         Register reg = new Register();
         reg.setVisible(true);
 

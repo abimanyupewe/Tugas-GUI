@@ -4,7 +4,7 @@
  */
 package com.mycompany.tugas_logindanregister;
 
-import static com.mycompany.tugas_logindanregister.Register.nama;
+import static com.mycompany.tugas_logindanregister.Login.nama;
 
 /**
  *

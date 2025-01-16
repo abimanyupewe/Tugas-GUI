@@ -46,7 +46,9 @@ public class inputData extends homePage {
             pk,
             bk,
             pw,
-            status;
+            status,
+            opsiExtra,
+            query;
 
     public inputData() {
         initComponents();
@@ -55,7 +57,6 @@ public class inputData extends homePage {
 
 //        panggil class database
 //        this.TampilData();
-
         Object kolom[] = {"No Resi", "Nama Pengirim", "No Tlp Pengirim", "Alamat Pengirim", "Nama Penerima", "No Tlp Penerima", "Alamat Penerima", "Jenis Barang", "Berat", "Jenis Pengiriman", "Mode Pengiriman", "Opsi Extra", "Status"};
         Object data[][] = {};
 
@@ -99,7 +100,7 @@ public class inputData extends homePage {
                     txtBeratBarang.setText(model.getValueAt(selectedRow, 8).toString());
                     jCBJenisPengiriman.setSelectedItem(model.getValueAt(selectedRow, 9).toString());
 
-                    String modePengiriman = model.getValueAt(selectedRow, 10).toString();
+                    modePengiriman = model.getValueAt(selectedRow, 10).toString();
                     if (modePengiriman.equals("Express")) {
                         jRadioButtonExpress.setSelected(true);
                     } else if (modePengiriman.equals("Reguler")) {
@@ -115,7 +116,7 @@ public class inputData extends homePage {
                 }
             }
         });
-        
+
 //        database
         Connection conn = connection_database.getConnection();
 
@@ -125,7 +126,7 @@ public class inputData extends homePage {
         }
 
         try {
-            String SQL = "SELECT * FROM data_table_logistik";
+            SQL = "SELECT * FROM data_table_logistik";
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet res = stmt.executeQuery(SQL);
 
@@ -140,7 +141,7 @@ public class inputData extends homePage {
                         res.getString("alamat_pengirim"),
                         res.getString("nama_penerima"),
                         res.getString("no_tlp_penerima"),
-                        res.getString("alamat_penerima"), // Perbaikan nama kolom
+                        res.getString("alamat_penerima"),
                         res.getString("jenis_barang"),
                         res.getString("berat"),
                         res.getString("jenis_pengiriman"),
@@ -210,7 +211,6 @@ public class inputData extends homePage {
 //            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,7 +232,6 @@ public class inputData extends homePage {
         jCheckBoxPlastikWrap = new javax.swing.JCheckBox();
         jCBStatusPengiriman = new javax.swing.JComboBox<>();
         btnSimpan = new javax.swing.JButton();
-        btnHapusisiTabel = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnHapusBarisTabel = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -335,16 +334,6 @@ public class inputData extends homePage {
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimpanActionPerformed(evt);
-            }
-        });
-
-        btnHapusisiTabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnHapusisiTabel.setForeground(new java.awt.Color(0, 102, 102));
-        btnHapusisiTabel.setText("Hapus Isi Tabel");
-        btnHapusisiTabel.setPreferredSize(new java.awt.Dimension(116, 30));
-        btnHapusisiTabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHapusisiTabelActionPerformed(evt);
             }
         });
 
@@ -464,13 +453,13 @@ public class inputData extends homePage {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -479,7 +468,7 @@ public class inputData extends homePage {
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 442, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnHapusInputan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnHapusBarisTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -545,19 +534,14 @@ public class inputData extends homePage {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jCheckBoxPlastikWrap))
                                     .addComponent(jCBJenisPengiriman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)))
+                                .addGap(142, 583, Short.MAX_VALUE)
+                                .addComponent(jLabel10)))
                         .addGap(34, 34, 34))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -625,12 +609,11 @@ public class inputData extends homePage {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
                                     .addComponent(jCBStatusPengiriman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusBarisTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusInputan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHapusisiTabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jCBFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -670,63 +653,139 @@ public class inputData extends homePage {
         // TODO add your handling code here:
 
 //        data pelanggan
-        noResi = txtNoResi.getText();
-        namaPengririm = txtNamaPengirim.getText();
-        noTlpPengirim = txtNoTlpPengirim.getText();
-        alamatPengirim = jTextAreaAlamatPengirim.getText();
-        namaPenerima = txtNamaPenerima.getText();
-        noTlpPenerima = txtNoTlpPenerima.getText();
-        alamatPenerima = jTextAreaAlamatPenerima.getText();
+//        noResi = txtNoResi.getText();
+//        namaPengririm = txtNamaPengirim.getText();
+//        noTlpPengirim = txtNoTlpPengirim.getText();
+//        alamatPengirim = jTextAreaAlamatPengirim.getText();
+//        namaPenerima = txtNamaPenerima.getText();
+//        noTlpPenerima = txtNoTlpPenerima.getText();
+//        alamatPenerima = jTextAreaAlamatPenerima.getText();
+//
+////        data barang
+//        jenisBarang = jCBJenisbarang.getSelectedItem().toString();
+//        berat = txtBeratBarang.getText();
+//        jenisJasaPengiriman = jCBJenisPengiriman.getSelectedItem().toString();
+////      mode pengiriman
+//        if (jRadioButtonExpress.isSelected()) {
+//            modePengiriman = "Express";
+//        } else {
+//            modePengiriman = "Reguler";
+//        }
+////        checkbox
+//        if (jCheckBoxBubbleWrap.isSelected()) {
+//            bw = "Bubble Wrap";
+//        } else {
+//            bw = "";
+//        }
+//        if (jCheckBoxPackingKayu.isSelected()) {
+//            pk = "Packing Kayu";
+//        } else {
+//            pk = "";
+//        }
+//        if (jCheckBoxDoubleKarton.isSelected()) {
+//            bk = "Bubble Karton";
+//        } else {
+//            bk = "";
+//        }
+//        if (jCheckBoxPlastikWrap.isSelected()) {
+//            pw = "Plastik Wrapping";
+//        } else {
+//            pw = "";
+//        }
+//        status = jCBStatusPengiriman.getSelectedItem().toString();
+////        memasukkan ke table
+//        confirm = JOptionPane.showConfirmDialog(this, "Apakah inputan sudah benar ?",
+//                "Konfirmasi", JOptionPane.YES_NO_OPTION);
+//        if (confirm == JOptionPane.YES_OPTION) {
+//            model.addRow(new Object[]{
+//                noResi,
+//                namaPengririm,
+//                noTlpPengirim,
+//                alamatPengirim,
+//                namaPenerima,
+//                noTlpPenerima,
+//                alamatPenerima,
+//                jenisBarang,
+//                berat,
+//                jenisJasaPengiriman,
+//                modePengiriman, bw, status});
+//            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan.", "Info", JOptionPane.INFORMATION_MESSAGE);
+//        }
+        try {
+            // Koneksi ke database
+            Connection conn = connection_database.getConnection();
+            System.out.println("Koneksi berhasil!");
 
-//        data barang
-        jenisBarang = jCBJenisbarang.getSelectedItem().toString();
-        berat = txtBeratBarang.getText();
-        jenisJasaPengiriman = jCBJenisPengiriman.getSelectedItem().toString();
-//      mode pengiriman
-        if (jRadioButtonExpress.isSelected()) {
-            modePengiriman = "Express";
-        } else {
-            modePengiriman = "Reguler";
-        }
-//        checkbox
-        if (jCheckBoxBubbleWrap.isSelected()) {
-            bw = "Bubble Wrap";
-        } else {
-            bw = "";
-        }
-        if (jCheckBoxPackingKayu.isSelected()) {
-            pk = "Packing Kayu";
-        } else {
-            pk = "";
-        }
-        if (jCheckBoxDoubleKarton.isSelected()) {
-            bk = "Bubble Karton";
-        } else {
-            bk = "";
-        }
-        if (jCheckBoxPlastikWrap.isSelected()) {
-            pw = "Plastik Wrapping";
-        } else {
-            pw = "";
-        }
-        status = jCBStatusPengiriman.getSelectedItem().toString();
-//        memasukkan ke table
-        confirm = JOptionPane.showConfirmDialog(this, "Apakah inputan sudah benar ?",
-                "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
+            // Query untuk memasukkan data
+            query = "INSERT INTO data_table_logistik(no_resi, nama_pengirim, no_tlp_pengirim, alamat_pengirim, nama_penerima, no_tlp_penerima, alamat_penerima, jenis_barang, berat, jenis_pengiriman, mode_pengiriman, opsi_extra, status_pengiriman) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            // Mengisi parameter query
+            stmt.setString(1, txtNoResi.getText().trim());
+            stmt.setString(2, txtNamaPengirim.getText().trim());
+            stmt.setString(3, txtNoTlpPengirim.getText().trim());
+            stmt.setString(4, jTextAreaAlamatPengirim.getText().trim());
+            stmt.setString(5, txtNamaPenerima.getText().trim());
+            stmt.setString(6, txtNoTlpPenerima.getText().trim());
+            stmt.setString(7, jTextAreaAlamatPenerima.getText().trim());
+            stmt.setString(8, jCBJenisbarang.getSelectedItem().toString());
+            stmt.setString(9, txtBeratBarang.getText().trim());
+            stmt.setString(10, jCBJenisPengiriman.getSelectedItem().toString());
+
+            // Mode pengiriman
+            String modePengiriman = jRadioButtonExpress.isSelected() ? "Express" : "Reguler";
+            stmt.setString(11, modePengiriman);
+
+            // Opsi extra
+            StringBuilder opsiBuilder = new StringBuilder();
+            if (jCheckBoxBubbleWrap.isSelected()) {
+                opsiBuilder.append("Bubble Wrap, ");
+            }
+            if (jCheckBoxPackingKayu.isSelected()) {
+                opsiBuilder.append("Packing Kayu, ");
+            }
+            if (jCheckBoxDoubleKarton.isSelected()) {
+                opsiBuilder.append("Double Karton, ");
+            }
+            if (jCheckBoxPlastikWrap.isSelected()) {
+                opsiBuilder.append("Plastik Wrap");
+            }
+
+            // Hapus koma terakhir jika ada
+            String opsiExtra = opsiBuilder.toString().replaceAll(", $", "");
+            stmt.setString(12, opsiExtra);
+
+            // Status pengiriman
+            stmt.setString(13, jCBStatusPengiriman.getSelectedItem().toString());
+
+            // Menjalankan query
+            stmt.executeUpdate();
+            System.out.println("Query berhasil dijalankan.");
+
+            // Menampilkan pesan sukses
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan ☺.", "Database", JOptionPane.INFORMATION_MESSAGE);
+
+            // Menambahkan data ke tabel
+            DefaultTableModel model = (DefaultTableModel) jTableHasil.getModel();
             model.addRow(new Object[]{
-                noResi,
-                namaPengririm,
-                noTlpPengirim,
-                alamatPengirim,
-                namaPenerima,
-                noTlpPenerima,
-                alamatPenerima,
-                jenisBarang,
-                berat,
-                jenisJasaPengiriman,
-                modePengiriman, bw, status});
-            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                txtNoResi.getText().trim(),
+                txtNamaPengirim.getText().trim(),
+                txtNoTlpPengirim.getText().trim(),
+                jTextAreaAlamatPengirim.getText().trim(),
+                txtNamaPenerima.getText().trim(),
+                txtNoTlpPenerima.getText().trim(),
+                jTextAreaAlamatPenerima.getText().trim(),
+                jCBJenisbarang.getSelectedItem().toString(),
+                txtBeratBarang.getText().trim(),
+                jCBJenisPengiriman.getSelectedItem().toString(),
+                modePengiriman,
+                opsiExtra,
+                jCBStatusPengiriman.getSelectedItem().toString()
+            });
+        } catch (SQLException e) {
+            // Menampilkan error jika ada
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -757,71 +816,333 @@ public class inputData extends homePage {
 
     private void btnHapusBarisTabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusBarisTabelActionPerformed
         // TODO add your handling code here:
-        confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data pada baris tabel yang anda pilih ?",
+        Connection conn = connection_database.getConnection();
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Apakah Anda yakin ingin menghapus data pada baris tabel yang Anda pilih?",
                 "Konfirmasi", JOptionPane.YES_NO_OPTION);
+
         if (confirm == JOptionPane.YES_OPTION) {
-            index = jTableHasil.getSelectedRow();
-            model.removeRow(index);
-            jTableHasil.setModel(model);
-            JOptionPane.showMessageDialog(this, "Data berhasil dihapus.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                // Query penghapusan dengan PreparedStatement
+                String sql = "DELETE FROM data_table_logistik WHERE no_resi = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, txtNoResi.getText().trim());
+                int rowsDeleted = stmt.executeUpdate();
+
+                if (rowsDeleted > 0) {
+                    JOptionPane.showMessageDialog(this, "Data berhasil dihapus.", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Menghapus data dari tabel
+                    DefaultTableModel model = (DefaultTableModel) jTableHasil.getModel();
+                    int selectedRow = jTableHasil.getSelectedRow();
+                    if (selectedRow != -1) {
+                        model.removeRow(selectedRow);
+                    }
+
+                    // Reset input form
+                    txtNoResi.requestFocus();
+                    txtNoResi.setText("");
+                    txtNamaPengirim.setText("");
+                    txtNoTlpPengirim.setText("");
+                    jTextAreaAlamatPengirim.setText("");
+                    txtNamaPenerima.setText("");
+                    txtNoTlpPenerima.setText("");
+                    jTextAreaAlamatPenerima.setText("");
+                    jCBJenisbarang.setSelectedIndex(0);
+                    txtBeratBarang.setText("");
+                    jCBJenisPengiriman.setSelectedIndex(0);
+                    btnGroupModePengiriman.clearSelection();
+                    jCheckBoxBubbleWrap.setSelected(false);
+                    jCheckBoxPackingKayu.setSelected(false);
+                    jCheckBoxDoubleKarton.setSelected(false);
+                    jCheckBoxPlastikWrap.setSelected(false);
+                    jCBStatusPengiriman.setSelectedIndex(0);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Data tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Log error
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnHapusBarisTabelActionPerformed
 
-    private void btnHapusisiTabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusisiTabelActionPerformed
-        // TODO add your handling code here:
-        confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus semua data di tabel?",
-                "Konfirmasi", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            model.setRowCount(0); // Menghapus semua isi tabel
-            JOptionPane.showMessageDialog(this, "Semua data berhasil dihapus.", "Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }//GEN-LAST:event_btnHapusisiTabelActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        int selectedRow = jTableHasil.getSelectedRow();
-        if (selectedRow != -1) {
-            // Update data pada model tabel
-            model.setValueAt(txtNoResi.getText(), selectedRow, 0);
-            model.setValueAt(txtNamaPengirim.getText(), selectedRow, 1);
-            model.setValueAt(txtNoTlpPengirim.getText(), selectedRow, 2);
-            model.setValueAt(jTextAreaAlamatPengirim.getText(), selectedRow, 3);
-            model.setValueAt(txtNamaPenerima.getText(), selectedRow, 4);
-            model.setValueAt(txtNoTlpPenerima.getText(), selectedRow, 5);
-            model.setValueAt(jTextAreaAlamatPenerima.getText(), selectedRow, 6);
-            model.setValueAt(jCBJenisbarang.getSelectedItem().toString(), selectedRow, 7);
-            model.setValueAt(txtBeratBarang.getText(), selectedRow, 8);
-            model.setValueAt(jCBJenisPengiriman.getSelectedItem().toString(), selectedRow, 9);
+//        int selectedRow = jTableHasil.getSelectedRow();
+//        if (selectedRow != -1) {
+//            // Update data pada model tabel
+//            model.setValueAt(txtNoResi.getText(), selectedRow, 0);
+//            model.setValueAt(txtNamaPengirim.getText(), selectedRow, 1);
+//            model.setValueAt(txtNoTlpPengirim.getText(), selectedRow, 2);
+//            model.setValueAt(jTextAreaAlamatPengirim.getText(), selectedRow, 3);
+//            model.setValueAt(txtNamaPenerima.getText(), selectedRow, 4);
+//            model.setValueAt(txtNoTlpPenerima.getText(), selectedRow, 5);
+//            model.setValueAt(jTextAreaAlamatPenerima.getText(), selectedRow, 6);
+//            model.setValueAt(jCBJenisbarang.getSelectedItem().toString(), selectedRow, 7);
+//            model.setValueAt(txtBeratBarang.getText(), selectedRow, 8);
+//            model.setValueAt(jCBJenisPengiriman.getSelectedItem().toString(), selectedRow, 9);
+//
+//            modePengiriman = jRadioButtonExpress.isSelected() ? "Express" : "Reguler";
+//            model.setValueAt(modePengiriman, selectedRow, 10);
+//
+//            opsiExtra = "";
+//            if (jCheckBoxBubbleWrap.isSelected()) {
+//                opsiExtra += "Bubble Wrap, ";
+//            }
+//            if (jCheckBoxPackingKayu.isSelected()) {
+//                opsiExtra += "Packing Kayu, ";
+//            }
+//            if (jCheckBoxDoubleKarton.isSelected()) {
+//                opsiExtra += "Double Karton, ";
+//            }
+//            if (jCheckBoxPlastikWrap.isSelected()) {
+//                opsiExtra += "Plastik Wrap";
+//            }
+//
+//// Hapus koma di akhir string jika ada
+//            if (!opsiExtra.isEmpty()) {
+//                opsiExtra = opsiExtra.substring(0, opsiExtra.length() - 2);
+//            }
+//            model.setValueAt(opsiExtra, selectedRow, 11);
+//
+//            model.setValueAt(jCBStatusPengiriman.getSelectedItem().toString(), selectedRow, 12);
+//
+//            JOptionPane.showMessageDialog(null, "Data updated successfully!");
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Please select a row to update.");
+//        }
 
-            String modePengiriman = jRadioButtonExpress.isSelected() ? "Express" : "Reguler";
-            model.setValueAt(modePengiriman, selectedRow, 10);
+        try {
+            Connection conn = connection_database.getConnection();
+            System.out.println("Koneksi berhasil!");
 
-            String opsiExtra = "";
+            // Memulai query dasar
+            StringBuilder queryBuilder = new StringBuilder("UPDATE data_table_logistik SET ");
+
+            // Menambahkan kolom yang diubah secara dinamis
+            boolean first = true;
+
+            if (!txtNoResi.getText().trim().isEmpty()) {
+                queryBuilder.append("no_resi=?");
+                first = false;
+            }
+            if (!txtNamaPengirim.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("nama_pengirim=?");
+                first = false;
+            }
+            if (!txtNoTlpPengirim.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("no_tlp_pengirim=?");
+                first = false;
+            }
+            if (!jTextAreaAlamatPengirim.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("alamat_pengirim=?");
+                first = false;
+            }
+            if (!txtNamaPenerima.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("nama_penerima=?");
+                first = false;
+            }
+            if (!txtNoTlpPenerima.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("no_tlp_penerima=?");
+                first = false;
+            }
+            if (!jTextAreaAlamatPenerima.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("alamat_penerima=?");
+                first = false;
+            }
+            if (jCBJenisbarang.getSelectedIndex() != -1) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("jenis_barang=?");
+                first = false;
+            }
+            if (!txtBeratBarang.getText().trim().isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("berat=?");
+                first = false;
+            }
+            if (jCBJenisPengiriman.getSelectedIndex() != -1) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("jenis_pengiriman=?");
+                first = false;
+            }
+
+            // Mode pengiriman
+            if (jRadioButtonExpress.isSelected() || jRadioButtonReguler.isSelected()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("mode_pengiriman=?");
+                first = false;
+            }
+
+            // Opsi Extra
+            StringBuilder opsiBuilder = new StringBuilder();
             if (jCheckBoxBubbleWrap.isSelected()) {
-                opsiExtra += "Bubble Wrap, ";
+                opsiBuilder.append("Bubble Wrap, ");
             }
             if (jCheckBoxPackingKayu.isSelected()) {
-                opsiExtra += "Packing Kayu, ";
+                opsiBuilder.append("Packing Kayu, ");
             }
             if (jCheckBoxDoubleKarton.isSelected()) {
-                opsiExtra += "Double Karton, ";
+                opsiBuilder.append("Double Karton, ");
             }
             if (jCheckBoxPlastikWrap.isSelected()) {
-                opsiExtra += "Plastik Wrap";
+                opsiBuilder.append("Plastik Wrap");
             }
+            opsiExtra = opsiBuilder.toString().replaceAll(", $", "");
+
+            if (!opsiExtra.isEmpty()) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("opsi_extra=?");
+                first = false;
+            }
+
+            if (jCBStatusPengiriman.getSelectedIndex() != -1) {
+                if (!first) {
+                    queryBuilder.append(", ");
+                }
+                queryBuilder.append("status_pengiriman=?");
+                first = false;
+            }
+
+            // Menambahkan klausa WHERE
+            queryBuilder.append(" WHERE no_resi=?");
+
+            // Menyiapkan statement
+            query = queryBuilder.toString();
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            // Mengisi parameter
+            int paramIndex = 1;
+
+            if (!txtNoResi.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, txtNoResi.getText().trim());
+            }
+            if (!txtNamaPengirim.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, txtNamaPengirim.getText().trim());
+            }
+            if (!txtNoTlpPengirim.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, txtNoTlpPengirim.getText().trim());
+            }
+            if (!jTextAreaAlamatPengirim.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, jTextAreaAlamatPengirim.getText().trim());
+            }
+            if (!txtNamaPenerima.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, txtNamaPenerima.getText().trim());
+            }
+            if (!txtNoTlpPenerima.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, txtNoTlpPenerima.getText().trim());
+            }
+            if (!jTextAreaAlamatPenerima.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, jTextAreaAlamatPenerima.getText().trim());
+            }
+            if (jCBJenisbarang.getSelectedIndex() != -1) {
+                stmt.setString(paramIndex++, jCBJenisbarang.getSelectedItem().toString());
+            }
+            if (!txtBeratBarang.getText().trim().isEmpty()) {
+                stmt.setString(paramIndex++, txtBeratBarang.getText().trim());
+            }
+            if (jCBJenisPengiriman.getSelectedIndex() != -1) {
+                stmt.setString(paramIndex++, jCBJenisPengiriman.getSelectedItem().toString());
+            }
+
+            if (jRadioButtonExpress.isSelected()) {
+                stmt.setString(paramIndex++, "Express");
+            } else if (jRadioButtonReguler.isSelected()) {
+                stmt.setString(paramIndex++, "Reguler");
+            }
+
+            if (!opsiExtra.isEmpty()) {
+                stmt.setString(paramIndex++, opsiExtra);
+            }
+            if (jCBStatusPengiriman.getSelectedIndex() != -1) {
+                stmt.setString(paramIndex++, jCBStatusPengiriman.getSelectedItem().toString());
+            }
+
+            stmt.setString(paramIndex++, txtNoResi.getText().trim()); // Primary key (no_resi)
+
+            // Menjalankan query
+            stmt.executeUpdate();
+            System.out.println("Query berhasil dijalankan.");
+
+            // Menampilkan pesan sukses
+            JOptionPane.showMessageDialog(null, "Data berhasil diperbarui ☺.", "Database", JOptionPane.INFORMATION_MESSAGE);
+
+//            untuk nampilkan data yang sudah siupdate ke tabel
+            int selectedRow = jTableHasil.getSelectedRow();
+            if (selectedRow != -1) {
+                // Update data pada model tabel
+                model.setValueAt(txtNoResi.getText(), selectedRow, 0);
+                model.setValueAt(txtNamaPengirim.getText(), selectedRow, 1);
+                model.setValueAt(txtNoTlpPengirim.getText(), selectedRow, 2);
+                model.setValueAt(jTextAreaAlamatPengirim.getText(), selectedRow, 3);
+                model.setValueAt(txtNamaPenerima.getText(), selectedRow, 4);
+                model.setValueAt(txtNoTlpPenerima.getText(), selectedRow, 5);
+                model.setValueAt(jTextAreaAlamatPenerima.getText(), selectedRow, 6);
+                model.setValueAt(jCBJenisbarang.getSelectedItem().toString(), selectedRow, 7);
+                model.setValueAt(txtBeratBarang.getText(), selectedRow, 8);
+                model.setValueAt(jCBJenisPengiriman.getSelectedItem().toString(), selectedRow, 9);
+
+                modePengiriman = jRadioButtonExpress.isSelected() ? "Express" : "Reguler";
+                model.setValueAt(modePengiriman, selectedRow, 10);
+
+                opsiExtra = "";
+                if (jCheckBoxBubbleWrap.isSelected()) {
+                    opsiExtra += "Bubble Wrap, ";
+                }
+                if (jCheckBoxPackingKayu.isSelected()) {
+                    opsiExtra += "Packing Kayu, ";
+                }
+                if (jCheckBoxDoubleKarton.isSelected()) {
+                    opsiExtra += "Double Karton, ";
+                }
+                if (jCheckBoxPlastikWrap.isSelected()) {
+                    opsiExtra += "Plastik Wrap";
+                }
 
 // Hapus koma di akhir string jika ada
-            if (!opsiExtra.isEmpty()) {
-                opsiExtra = opsiExtra.substring(0, opsiExtra.length() - 2);
+                if (!opsiExtra.isEmpty()) {
+                    opsiExtra = opsiExtra.substring(0, opsiExtra.length() - 2);
+                }
+                model.setValueAt(opsiExtra, selectedRow, 11);
+
+                model.setValueAt(jCBStatusPengiriman.getSelectedItem().toString(), selectedRow, 12);
             }
-            model.setValueAt(opsiExtra, selectedRow, 11);
 
-            model.setValueAt(jCBStatusPengiriman.getSelectedItem().toString(), selectedRow, 12);
-
-            JOptionPane.showMessageDialog(null, "Data updated successfully!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Please select a row to update.");
+        } catch (SQLException e) {
+            // Menampilkan error jika ada
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jTableHasilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableHasilMouseClicked
@@ -930,7 +1251,6 @@ public class inputData extends homePage {
     private javax.swing.ButtonGroup btnGroupModePengiriman;
     private javax.swing.JButton btnHapusBarisTabel;
     private javax.swing.JButton btnHapusInputan;
-    private javax.swing.JButton btnHapusisiTabel;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> jCBFilter;

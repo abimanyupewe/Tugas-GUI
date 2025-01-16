@@ -6,9 +6,16 @@ package com.mycompany.tugas_logindanregister;
 
 import static com.mycompany.tugas_logindanregister.Register.email;
 import static com.mycompany.tugas_logindanregister.Register.nama;
-import static com.mycompany.tugas_logindanregister.Register.pass;
 import static com.mycompany.tugas_logindanregister.Register.username;
+import fuctions.connection_database;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -20,9 +27,25 @@ public class ubahDataUser extends javax.swing.JFrame {
      * Creates new form ubahDataUser
      */
     String passUser;
-    
+
     public ubahDataUser() {
         initComponents();
+    }
+
+    //    hashpassword
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -43,6 +66,8 @@ public class ubahDataUser extends javax.swing.JFrame {
         txtUbahNama = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtUbahUsername = new javax.swing.JTextField();
+        txtUsernameLama = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +105,10 @@ public class ubahDataUser extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Username");
 
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Username Lama");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -89,14 +118,15 @@ public class ubahDataUser extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtUbahNama, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtUbahEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtUbahUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                    .addComponent(txtUbahNama, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addComponent(txtUbahEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addComponent(txtUbahUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addComponent(txtUsernameLama))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,7 +143,11 @@ public class ubahDataUser extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtUbahUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtUsernameLama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,30 +178,58 @@ public class ubahDataUser extends javax.swing.JFrame {
 
     private void btnPerbaruiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerbaruiActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Yakin ingin memperbarui data ?", "Warnning", JOptionPane.WARNING_MESSAGE);
-        
-        passUser = JOptionPane.showInputDialog(this, "Masukkan password kamu ");
 
-        if (passUser.equals(Register.pass)) {
-            nama = txtUbahNama.getText();
-            email = txtUbahEmail.getText();
-            username = txtUbahUsername.getText();
+        Connection conn = connection_database.getConnection();
 
-            dispose();
+        if (conn == null) {
+            JOptionPane.showMessageDialog(this, "Koneksi ke database gagal.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            Profile profil = new Profile();
-            profil.setVisible(true);
-            profil.setLocationRelativeTo(null);
-        } else {
-            JOptionPane.showMessageDialog(this, "Password yang diinput salah, silahkan input ulang"
-                    + "Password dengan benar", "Konfirmasi", JOptionPane.ERROR_MESSAGE);
+        if (txtUbahNama.getText().trim().isEmpty() || txtUbahEmail.getText().trim().isEmpty() || txtUbahUsername.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua field harus diisi.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Periksa apakah username baru sudah ada di database
+            String checkUsernameSql = "SELECT * FROM users WHERE username = ? AND username != ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkUsernameSql);
+            checkStmt.setString(1, txtUbahUsername.getText().trim());
+            checkStmt.setString(2, txtUsernameLama.getText().trim());
+            ResultSet checkResult = checkStmt.executeQuery();
+
+            if (checkResult.next()) {
+                JOptionPane.showMessageDialog(this, "Username sudah digunakan, coba yang lain.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Lakukan pembaruan data
+            String sql = "UPDATE users SET name = ?, email = ?, username = ? WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, txtUbahNama.getText().trim());
+            stmt.setString(2, txtUbahEmail.getText().trim());
+            stmt.setString(3, txtUbahUsername.getText().trim());
+            stmt.setString(4, txtUsernameLama.getText().trim()); // Username lama
+
+            int rowsUpdated = stmt.executeUpdate();
+            System.out.println("Rows updated: " + rowsUpdated);
+
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Data berhasil diperbarui.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Tidak ada data yang diperbarui.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPerbaruiActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         // TODO add your handling code here:
         dispose();
-        
+
         Profile profil = new Profile();
         profil.setVisible(true);
         profil.setLocationRelativeTo(null);
@@ -216,10 +278,12 @@ public class ubahDataUser extends javax.swing.JFrame {
     private javax.swing.JButton btnPerbarui;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtUbahEmail;
     private javax.swing.JTextField txtUbahNama;
     private javax.swing.JTextField txtUbahUsername;
+    private javax.swing.JTextField txtUsernameLama;
     // End of variables declaration//GEN-END:variables
 }

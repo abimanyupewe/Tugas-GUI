@@ -4,7 +4,13 @@
  */
 package com.mycompany.tugas_logindanregister;
 
+import fuctions.connection_database;
 import java.awt.Color;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,6 +32,22 @@ public class Register extends javax.swing.JFrame {
 
         Color bg = new Color(255, 255, 255, 255);
         getContentPane().setBackground(bg);
+    }
+
+//    hashpassword
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -232,23 +254,54 @@ public class Register extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
+        // Koneksi ke database
+        Connection conn = connection_database.getConnection();
+
         if (txtPassReg.getText().equals(txtRePassReg.getText())) {
-            nama = txtNamaReg.getText();
-            email = txtEmailReg.getText();
-            username = txtUsernameReg.getText();
-            pass = txtPassReg.getText();
-            
-            JOptionPane.showMessageDialog(this, "Akun berhasil dibuat, silahkan login!!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            // Validasi input
+            if (txtNamaReg.getText().trim().isEmpty() || txtEmailReg.getText().trim().isEmpty()
+                    || txtPassReg.getText().trim().isEmpty() || txtPassReg.getPassword().length == 0) {
+                JOptionPane.showMessageDialog(this, "Semua kolom harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            dispose();
+            // Hash password menggunakan SHA-256 atau bcrypt (opsional)
+            String hashedPassword = hashPassword(new String(txtPassReg.getPassword()));
 
-            Login Lg = new Login();
-            Lg.setVisible(true);
+            try {
+                // Query SQL untuk menyimpan data
+                String sql = "INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, txtNamaReg.getText().trim());
+                stmt.setString(2, txtEmailReg.getText().trim());
+                stmt.setString(3, txtUsernameReg.getText().trim());
+                stmt.setString(4, hashedPassword);
+//                nama = rs.getString("name"); // Simpan nama pengguna
 
-            Lg.pack();
-            Lg.setLocationRelativeTo(null);
-            Lg.setDefaultCloseOperation(Register.EXIT_ON_CLOSE);
-            
+                // Eksekusi query
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Akun berhasil dibuat, silahkan login!!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+
+                dispose();
+
+                Login Lg = new Login();
+                Lg.setVisible(true);
+
+                Lg.pack();
+                Lg.setLocationRelativeTo(null);
+                Lg.setDefaultCloseOperation(Register.EXIT_ON_CLOSE);
+
+                // Reset form
+                txtNamaReg.setText("");
+                txtEmailReg.setText("");
+                txtUsernameReg.setText("");
+                txtPassReg.setText("");
+                txtRePassReg.setText("");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "Password yang diinput berbeda, silahkan input ulang"
                     + "Password dengan benar", "Konfirmasi", JOptionPane.ERROR_MESSAGE);
